@@ -40,7 +40,7 @@ git remote get-url origin | grep -q "git@" && {
   GIT_URL=(git remote get-url origin)
 }
 
-sleep 10
+sleep 30
 echo "GIT URL: $GIT_URL"
 argocd repo add $GIT_URL --name argocd
 
