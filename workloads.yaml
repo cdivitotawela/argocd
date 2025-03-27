@@ -8,15 +8,13 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-
   destination:
     namespace: argocd
     server: https://kubernetes.default.svc
   sources:
     - repoURL: https://github.com/cdivitotawela/argocd
       targetRevision: main
-      path: dev
-
+      path: argo-app-of-apps/dev
   syncPolicy:
     automated:
       prune: true

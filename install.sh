@@ -40,7 +40,7 @@ argocd login 127.0.0.1:8443 --username admin --password $_PASSWORD --insecure
 sleep 30
 
 # Create workload application. This is the init application
-argocd app create workdloads --file ./workloads.yaml
+argocd app create workloads --file ./workloads.yaml
 
 # Add repository
 # git remote get-url origin | grep -q "git@" && {
