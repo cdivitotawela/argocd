@@ -13,3 +13,10 @@ applications:
   - repoURL: https://github.com/cdivitotawela/argocd
     targetRevision: main
     path: applications/app1
+- name: app1
+  project: default
+  namespace: default
+  sources:
+  - repoURL: https://github.com/cdivitotawela/argocd
+    targetRevision: main
+    path: applications/app2
