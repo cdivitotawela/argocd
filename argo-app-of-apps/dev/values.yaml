@@ -1,4 +1,11 @@
 applications:
+- name: app1
+  project: default
+  namespace: default
+  sources:
+  - repoURL: https://github.com/cdivitotawela/argocd
+    targetRevision: main
+    path: applications/app2
 - name: prometheus
   project: default
   namespace: default
@@ -6,10 +13,4 @@ applications:
   - chart: kube-prometheus-stack
     repoURL: https://prometheus-community.github.io/helm-charts
     targetRevision: 70.3.0
-- name: app1
-  project: default
-  namespace: default
-  sources:
-  - repoURL: https://github.com/cdivitotawela/argocd
-    targetRevision: main
-    path: applications/app1
+
