@@ -5,6 +5,9 @@ ARGOCD_NAMESPACE="argocd"
 
 export KUBECONFIG=$PWD/.kubeconfig
 
+# Delete existing cluster
+kind delete cluster --name argocd
+
 # Install cluster
 kind create cluster --config config.yaml --kubeconfig .kubeconfig  --wait 300s
 
@@ -33,15 +36,21 @@ kubectl -n $ARGOCD_NAMESPACE port-forward svc/argocd-server 8443:443 > /dev/null
 _PASSWORD=$(cat .password)
 argocd login 127.0.0.1:8443 --username admin --password $_PASSWORD --insecure
 
-# Add repository
-git remote get-url origin | grep -q "git@" && {
-  GIT_URL=$(git remote get-url origin | sed 's|git@\([^:]*\):\(.*\)|https://\1/\2|g')
-} || {
-  GIT_URL=(git remote get-url origin)
-}
-
+# Waiting for thins to settle down
 sleep 30
-echo "GIT URL: $GIT_URL"
-argocd repo add $GIT_URL --name argocd
+
+# Create workload application. This is the init application
+argocd app create workdloads --file ./workloads.yaml
+
+# Add repository
+# git remote get-url origin | grep -q "git@" && {
+#   GIT_URL=$(git remote get-url origin | sed 's|git@\([^:]*\):\(.*\)|https://\1/\2|g')
+# } || {
+#   GIT_URL=(git remote get-url origin)
+# }
+
+
+# echo "GIT URL: $GIT_URL"
+# argocd repo add $GIT_URL --name argocd
 
 #open -a "Google Chrome" "https://localhost:8443/"
